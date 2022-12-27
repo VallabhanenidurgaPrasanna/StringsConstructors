@@ -1,51 +1,125 @@
-
-/*Create a class 'Student' with three data members which are name, age and address. The constructor of the class 
-assigns default values name as "unknown", age as '0' and address as "not available". It has two members with the same 
-name 'setInfo'. First method has two parameters for name and age and assigns the same whereas the second method takes
- has three parameters which are assigned to name, age and address respectively. Print the name, age and address of 
-10 students.
-Hint - Use array of objects*/
+/*Student
+rollno
+name
+marks
+grade
+ 
+ 
+10 Information Arraylist
+ 
+StudentDao  interface
+ 
+inserting student
+searching for student
+dispaly all students
+updating student
+deleting student
+ 
+StudentDaoImpl class
+implement
+ 
+ 
+main class
+ 
+you can create object and you can perform operation*/
 import java.util.*;
-
-class StudentC {
+class Student{
+  int rollno;
+  int marks;
   String name;
-  int age;
-  String address;
-
-  StudentC() {
-
+  String grade;
+  // constructor
+  Student(int rollno,int marks,String name, String grade){
+    this.rollno=rollno;
+    this.marks=marks;
+    this.name=name;
+    this.grade=grade;
+    
   }
+}
+interface StudentDao{
+  public void insertStudent(ArrayList<Student> a);
+  public void serachStudent(ArrayList<Student> a,int rollno);
+  public void displayStudent(ArrayList<Student> a);
+  public void updateStudent(ArrayList<Student> a,int rollno);
+  public void deleteStudent(ArrayList<Student> a,int rollno);
+}
 
-  StudentC(String name, int age, String address) {
-    this.name = "unknown";
-    this.age = 0;
-    this.address = "not available";
-  }
+ 
 
-  public void setInfo(String name, int age) {
-    this.name = name;
-    this.age = age;
-  }
-
-  public void setInfo(String name, int age, String address) {
-    this.name = name;
-    this.age = age;
-    this.address = address;
-  }
-
-  public static void main(String args[]) {
-    Scanner sc = new Scanner(System.in);
-    System.out.println("enter value");
-    int n = sc.nextInt();
-    StudentC s[] = new StudentC[n];
-    for (int i = 0; i < n; i++) {
-      s[i] = new StudentC();
-      System.out.println("Enter student Details");
-      // System.out.println("enter name");
-      s[i].setInfo(sc.next(), sc.nextInt());
-      s[i].setInfo(sc.next(), sc.nextInt(), sc.next());
-      System.out.println(s[i].name + " " + s[i].age);
-      System.out.println(s[i].name + " " + s[i].age + " " + s[i].address);
+class StudentDaoImpl implements StudentDao{
+  public void insertStudent(ArrayList<Student> a){
+   
+    for(Student obj:a){
+      System.out.println(obj.rollno+" "+obj.marks+" "+obj.name+" "+obj.grade);
     }
+  }
+  public void serachStudent(ArrayList<Student> a,int rollno){
+    for(Student obj:a){
+      if(obj.rollno==rollno){
+         System.out.println(obj.rollno+" "+obj.marks+" "+obj.name+" "+obj.grade);
+      }
+      else{
+        System.out.println("roll not matched");
+      }
+    }
+  }
+   public void displayStudent(ArrayList<Student> a){
+     for(Student obj:a){
+        System.out.println(obj.rollno+" "+obj.marks+" "+obj.name+" "+obj.grade);
+     }
+   }
+  public void updateStudent(ArrayList<Student> a,int rollno){
+    for(Student obj:a){
+      if(obj.rollno==rollno){
+        obj.marks=400;
+        System.out.println(obj.rollno+" "+obj.marks+" "+obj.name+" "+obj.grade);
+      }
+      else{
+        System.out.println("Record not matched");
+      }
+    }
+  }
+  public void deleteStudent(ArrayList<Student> a,int rollno){
+    Student std=null;
+    for(Student obj:a ){
+      if(obj.rollno==rollno){
+        std=obj;
+      }
+      
+    }
+    if(std==null){
+        System.out.println("invalid");
+      }
+      else{
+        a.remove(std);
+        System.out.println("Deleted ");
+      }
+  }
+}
+
+ 
+
+
+class StudentC{
+  public static void main(String args[]){
+    Student s=new Student(1,300,"durga","B");
+    Student sa=new Student(2,700,"prasanna","Z");
+    Student sb=new Student(3,600,"chanti","D");
+    Student sc=new Student(4,500,"sai","A");
+    Student sd=new Student(4,400,"kesava","c");
+    StudentDao s1= new StudentDaoImpl();
+    ArrayList<Student> a1=new ArrayList<Student>();
+    a1.add(s);
+    a1.add(sa);
+    a1.add(sb);
+    a1.add(sc);
+    a1.add(sd);
+    s1.insertStudent(a1);
+    s1.serachStudent(a1,2);
+    s1.displayStudent(a1);
+    s1.updateStudent(a1,3);
+    s1.deleteStudent(a1,3);
+    s1.displayStudent(a1);
   }
 }
